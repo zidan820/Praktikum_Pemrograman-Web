@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Pendaftaran Mahasiswa Baru</title>
+</head>
+<body style="background-color: white; margin: 20px;">
+    <img src="th (3).jpg" alt="Logo Kampus" style="display: block; margin: 0 auto 20px auto;">
+
+    <h1>Formulir Pendaftaran Mahasiswa Baru</h1>
+
+    <form action="#" method="post"> <fieldset>
+            <legend>Data Pribadi</legend>
+
+            <label for="namaLengkap">Nama Lengkap:</label><br>
+            <input type="text" id="namaLengkap" name="nama_lengkap" placeholder="Masukkan nama lengkap Anda" required><br><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" placeholder="contoh@kampus.ac.id" required><br><br>
+            <label>Jenis Kelamin:</label><br>
+            <input type="radio" id="pria" name="jenis_kelamin" value="pria" required>
+            <label for="pria">Pria</label><br>
+            <input type="radio" id="wanita" name="jenis_kelamin" value="wanita">
+            <label for="wanita">Wanita</label><br><br>
+            </fieldset>
+
+        <fieldset>
+            <legend>Minat dan Jurusan</legend>
+
+            <label>Hobi (pilih minimal 2):</label><br>
+            <input type="checkbox" id="membaca" name="hobi[]" value="membaca">
+            <label for="membaca">Membaca</label><br>
+            <input type="checkbox" id="olahraga" name="hobi[]" value="olahraga">
+            <label for="olahraga">Olahraga</label><br>
+            <input type="checkbox" id="musik" name="hobi[]" value="musik">
+            <label for="musik">Musik</label><br>
+            <input type="checkbox" id="coding" name="hobi[]" value="coding">
+            <label for="coding">Coding</label><br>
+            <input type="checkbox" id="menulis" name="hobi[]" value="menulis">
+            <label for="menulis">Menulis</label><br><br>
+            <label for="jurusan">Pilih Jurusan:</label><br>
+            <select id="jurusan" name="jurusan" required>
+                <option value="">-- Pilih Jurusan --</option>
+                <option value="teknik_informatika">Teknik Informatika</option>
+                <option value="bisnis digital">Bisnis digital</option>
+                <option value="sistem_informasi">Sistem Informasi</option>
+                <option value="teknik_elektro">Teknik elektro</option>
+            </select><br><br>
+            </fieldset>
+
+        <fieldset>
+            <legend>Keterangan Tambahan</legend>
+            <label for="alamat">Alamat Lengkap:</label><br>
+            <textarea id="alamat" name="alamat" rows="4" cols="50" placeholder="Masukkan alamat lengkap Anda (opsional)"></textarea><br><br>
+            </fieldset>
+
+        <input type="submit" value="Daftar Sekarang">
+        </form>
+
+    <p style="margin-top: 30px;">
+        Untuk informasi lebih lanjut tentang kampus kami, kunjungi <a href="https://www.stitek.ac.id/" target="_blank">Halaman Informasi Kampus</a>.
+    </p>
+</body>
+</html>
