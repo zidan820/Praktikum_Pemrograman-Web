@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Toko Digital Printing Cepat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .slideshow-img {
+      height: 250px;
+      object-fit: cover;
+    }
+    .product-list button {
+      margin-bottom: 5px;
+      text-align: left;
+    }
+    #output {
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+  <!-- Header -->
+  <header class="bg-primary text-white p-3 text-center">
+    <h1>Toko Digital Printing Cepat</h1>
+    <p id="datetime"></p>
+  </header>
+
+  <div class="container my-4">
+    <div class="row">
+      <!-- Display Produk & Slideshow -->
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <img id="productImage" class="images.jpeg" src="" alt="Gambar Produk">
+          <div class="card-body">
+            <h5 id="productName" class="card-title"></h5>
+            <p id="productPrice" class="card-text"></p>
+            <button onclick="prevImage()" class="btn btn-secondary me-2">Previous</button>
+            <button onclick="nextImage()" class="btn btn-secondary">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Daftar Produk -->
+      <div class="col-md-4">
+        <h5>Daftar Produk</h5>
+        <div class="product-list">
+          <div id="productButtons"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Pemesanan -->
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <h4>Form Pemesanan</h4>
+        <form id="orderForm">
+          <div class="mb-2">
+            <label for="nama" class="form-label">Nama Pemesan:</label>
+            <input type="text" id="nama" class="form-control">
+          </div>
+          <div class="mb-2">
+            <label for="jumlah" class="form-label">Jumlah Pesan:</label>
+            <input type="number" id="jumlah" class="form-control">
+          </div>
+          <div class="mb-2">
+            <label for="promo" class="form-label">Kode Promo:</label>
+            <input type="text" id="promo" class="form-control">
+          </div>
+          <button type="button" class="btn btn-success mt-2" onclick="prosesPesanan()">Pesan Sekarang</button>
+        </form>
+      </div>
+
+      <!-- Output Struk -->
+      <div class="col-md-6">
+        <h4>Struk Pemesanan</h4>
+        <div id="output" class="border p-3 bg-white rounded shadow-sm"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Produk
+    const produk = [
+      {
+        nama: "Spanduk",
+        harga: 35000,
+        gambar: ["https://solusiprint.id/fotoartikel/2024-03-07/48_Mengenal_Berbagai_Jenis_Bahan_Spanduk_Digital_Printing.jpg"]
+      },
+      {
+        nama: "Stiker",
+        harga: 150000,
+        gambar: ["https://www.tokozoom.com/assets/img/artikel/de56259036cd32adca1daf10b45d9bf4.jpg"]
+      },
+      {
+        nama: "Paket Kilat",
+        harga: 45000,
+        gambar: ["https://3.bp.blogspot.com/-u7mr066vXD0/VcKtj3UwGYI/AAAAAAAAA5c/bLTw4IuW1o8/s1600/Print%2Bspanduk.jpg"]
+      }
+    ];
+
+    let produkAktif = 0;
+    let gambarIndex = 0;
+
+    // Tampilkan waktu real-time
+    function updateTime() {
+      const now = new Date();
+      document.getElementById("datetime").innerText = now.toLocaleString("id-ID");
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // Tampilkan daftar produk
+    function renderDaftarProduk() {
+      let container = document.getElementById("productButtons");
+      container.innerHTML = "";
+      produk.forEach((p, index) => {
+        const btn = document.createElement("button");
+        btn.className = "btn btn-outline-primary w-100";
+        btn.innerText = p.nama;
+        btn.onclick = () => {
+          produkAktif = index;
+          gambarIndex = 0;
+          tampilkanProduk();
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    // Tampilkan produk utama
+    function tampilkanProduk() {
+      const p = produk[produkAktif];
+      document.getElementById("productImage").src = p.gambar[gambarIndex];
+      document.getElementById("productName").innerText = p.nama;
+      document.getElementById("productPrice").innerText = "Rp " + p.harga.toLocaleString("id-ID");
+    }
+
+    // Slideshow
+    function nextImage() {
+      gambarIndex = (gambarIndex + 1) % produk[produkAktif].gambar.length;
+      tampilkanProduk();
+    }
+
+    function prevImage() {
+      gambarIndex = (gambarIndex - 1 + produk[produkAktif].gambar.length) % produk[produkAktif].gambar.length;
+      tampilkanProduk();
+    }
+
+    // Pemesanan
+    function prosesPesanan() {
+      const nama = document.getElementById("nama").value.trim();
+      const jumlah = parseInt(document.getElementById("jumlah").value);
+      const promo = document.getElementById("promo").value.trim().toUpperCase();
+
+      if (!nama || isNaN(jumlah) || jumlah <= 0) {
+        alert("Nama dan jumlah harus diisi dengan benar!");
+        return;
+      }
+
+      const harga = produk[produkAktif].harga;
+      const namaProduk = produk[produkAktif].nama;
+      const subtotal = harga * jumlah;
+
+      let potongan = 0;
+      if (promo === "DISKON10") {
+        potongan = 0.1 * subtotal;
+      }
+
+      const total = subtotal - potongan;
+      const orderId = "INV-" + Math.floor(10000 + Math.random() * 90000);
+
+      // Tampilkan struk
+      const output = `
+🧾 Order ID: ${orderId}
+👤 Nama: ${nama}
+📦 Produk: ${namaProduk}
+🔢 Jumlah: ${jumlah}
+💰 Subtotal: Rp ${subtotal.toLocaleString("id-ID")}
+🎁 Potongan: Rp ${potongan.toLocaleString("id-ID")}
+🧮 Total Akhir: Rp ${total.toLocaleString("id-ID")}
+      `;
+      document.getElementById("output").innerText = output;
+    }
+
+    // Load awal
+    renderDaftarProduk();
+    tampilkanProduk();
+  </script>
+</body>
+</html>

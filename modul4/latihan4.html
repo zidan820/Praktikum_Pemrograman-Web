@@ -1,0 +1,18 @@
+ <!DOCTYPE html>
+ <html>
+ <head><title>Latihan Perulangan</title></head>
+ <body>
+ <h2>Daftar Mahasiswa</h2>
+ <ul id="daftar-Mahasiswa">
+ <!-- Konten akan diisi oleh JavaScript -->
+ </ul>
+
+ <script>
+ var Mahasiswa = ["zidan", "prass", "agus", "sofyan", "naufal",];
+ var daftarElement = document.getElementById("daftar-Mahasiswa");
+ for (let i = 0; i < Mahasiswa.length; i++) {
+ daftarElement.innerHTML += "<li>" + Mahasiswa[i] + "</li>";
+ }
+ </script>
+ </body>
+ </html>
